@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html layout:decorate="/user/usercenterTP::html">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<link rel="stylesheet" href="/css/usercenter.css">
+	<link rel="stylesheet" href="/css/header.css">
+	<link rel="stylesheet" href="/css/footer.css">
+	<link rel="stylesheet" href="/layui/css/layui.css" >
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	
+	<script src="/js/jquery-3.3.1.min.js"></script>
+	
+    <script src="/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="right-bar1" layout:fragment="right-bar1">
+    
+       <table class="table table-hover table-striped">
+				<thead>
+					<tr>
+						<th>文章ID</th>
+						<th>文章名</th>
+						<th>文章类型</th>
+						
+						<th colspan="2">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+						<tr th:each="article:${articles}">
+							<td class="article_id">[[${article.articleID} ]]</td>
+							<td ><a th:href="@{showArticle(articleID=${article.articleID}) }">[[${article.articleHeadline }]]</a></td>
+							<td class="title-name">[[${article.title.titleName}]]</td>
+							<td><a th:href="@{articleUpdate(articleID=${article.articleID}) }" class="btn btn-info btn-sm update">修改</a></td>
+							<td><button class="btn btn-danger btn-sm delete" data-toggle="modal" data-target="#myModal">删除</button></td>
+						</tr>
+					
+					
+				</tbody>
+			</table>
+			<a href="articleAdd"><button class="btn btn-primary " >新文章</button></a>
+          <!-- 模态框--用于提示确定删除 -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+ 
+      <!-- 模态框头部 -->
+      <div class="modal-header">
+        <h4 class="modal-title">确认删除？(不可恢复)</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <!-- 模态框底部 -->
+      <div class="modal-footer">
+       <button type="button" class="btn btn-danger commit" data-dismiss="modal">确认</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+      </div>
+ 
+    </div>
+  </div>
+  </div>
+
+<script>
+     $(function(){
+		 $(".delete").click(function(){
+				var art_id = $(this).parent().siblings(".article_id").text();
+				var del=$(this).parent();
+				console.log(art_id);
+				$(".commit").click(function(){
+					$.ajax({
+					type : "post",
+					url : "artupdate",
+					data : {
+						"articleID" : art_id,
+						"func" : "delete"
+					},
+					datatype : "json",
+					success : function(data) {
+						if(data=="1"){
+							del.parent().remove();
+						}
+						else{
+							
+						}
+					}
+					});
+				});
+				
+			
+			}); 
+    });
+  </script>
+    </div>
+
+  
+
+</html>

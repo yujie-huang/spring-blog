@@ -1,0 +1,11 @@
+#content{
+    display: flex;
+    min-height:900px;
+}
+.left-bar1{
+    flex-grow: 2;
+
+}
+.right-bar1{
+    flex-grow: 8;
+}

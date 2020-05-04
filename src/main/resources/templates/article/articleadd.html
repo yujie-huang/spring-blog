@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html layout:decorate="/user/usercenterTP::html">
+  <head>
+    
+        <title>添加文章</title>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+	
+	<link rel="stylesheet" href="/css/usercenter.css">
+	<link rel="stylesheet" href="/css/header.css">
+	<link rel="stylesheet" href="/css/footer.css">
+	<link rel="stylesheet" href="/layui/css/layui.css" >
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	
+	<script src="/js/jquery-3.3.1.min.js"></script>
+	
+    <script src="/js/bootstrap.min.js"></script>
+
+
+  </head>
+  <body>
+ 
+		<div class="right-bar1" layout:fragment="right-bar1">
+		
+		<form action="articleAdd" method="post" id="form1" class="" style="margin-top:10px;width:90%;margin-left:1%;">
+  			<div id="titlediv">
+            
+                <span style="font-size: 20px;">标题：</span>
+                <input id="headline" type="text"  placeholder="请输入标题" name="articleHeadline" value="">
+                <span style="font-size: 20px;"><strong>类型：</strong></span>
+                <select name="titleID">
+  			
+  				<option th:each="title : ${titles}" th:value="${title.titleID}">[[${title.titleName}]]</option>
+  			
+				</select>             
+                <input style="margin-left:80px; text-align: center;" type="submit" class="btn btn-success btn-sm" value="提交">
+            
+   			</div>
+   			 	
+    		<div class="form-group">
+    			<textarea id="text1"  name="content" class="form-control" style=" flex-wrap:wrap;display: none;"></textarea>
+    		</div>	
+     		
+  		</form>
+  		
+  	<script>
+           $(function(){
+            $("#form1").submit(function () {
+                if($("#headline").val()==''){
+                   alert("标题不能为空！");
+                    return false;
+                }
+                else return true;
+              });
+            
+        });
+           
+       
+    </script>
+    <script src="/layui/layui.js"></script>
+    <script>
+		layui.use('layedit', function(){
+  			var layedit = layui.layedit;
+  			
+  			//图片接口
+  			layedit.set({
+  			  uploadImage: {
+  			    url: '' //接口url
+  			    ,type: '' //默认post
+  			  }
+  			});
+  			
+  			
+  			layedit.build('text1',{
+  				height: 500//设置编辑器高度
+  			}); //建立编辑器
+		});
+</script>
+    
+    
+	</div>
+
+	
+  </body>
+
+
+
+</html>

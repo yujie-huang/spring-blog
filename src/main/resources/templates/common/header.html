@@ -1,0 +1,52 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="/css/header.css">
+
+</head>
+
+<body>
+<div th:fragment="header">
+<nav id="header" class="navbar navbar-expand-sm bg-dark navbar-dark" >
+	 <a class="navbar-brand" href="index">Code Story</a>
+	 
+		<form action="search" role="search" method="POST" class="form-inline">
+				<input type="text" name="word" id="" placeholder="search"class="form-control"> 
+				<select name="choose" class="form-control">
+					<option value="headline">标题</option>
+					<option value="title">类型</option>
+					<option value="user">用户名</option>
+				</select>
+				<button type="submit" class="btn btn-success">查找</button>
+		</form>
+		
+	
+		<ul class="navbar-nav head-right" th:if="${session.userName}!=null">
+			<li class="nav-item">
+				<a href='articleAdd' class=" nav-link">写文章</a>
+			</li>
+			<li class="nav-item">
+      			<a href="userinfo" class=" nav-link" th:text="${session.userName}"></a>
+    		</li>
+    		<li class="nav-item">
+      			<a href="logout" class=" nav-link">退出</a>
+    		</li>
+		</ul>
+			
+
+		<ul class="navbar-nav head-right" th:if="${session.userName}==null">
+			<li class="nav-item">
+				<a href='login' class=" nav-link">登录</a>
+			</li>
+			<li class="nav-item">
+				<a href='register' class=" nav-link">注册</a>
+			</li>
+		</ul>
+	
+</nav>
+</div>
+</body>
+
+</html>

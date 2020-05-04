@@ -1,0 +1,15 @@
+
+.content{
+    display: flex;
+}
+#content{
+    display: flex;
+}
+.left-bar1{
+    flex-grow: 2;
+
+}
+.right-bar1{
+   flex-grow: 8;
+}
+

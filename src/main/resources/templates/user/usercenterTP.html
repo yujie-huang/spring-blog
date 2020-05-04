@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE"></title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+
+</head>
+<body>
+
+   	<div th:replace="/common/header::header"></div>
+   	
+   	<div id="content">
+   	
+   	
+		<div class="left-bar1">
+           <div class="card" style="margin-left:5%;margin-top:10px">
+          <span id="hello" style="margin-left:10px;margin-top:10px" >你好，[[${session.userName}]]</span>
+           <br>
+            <label><h4>&nbsp;个人:</h4></label>
+                <ul class="list list-group">
+                    <li class="list-group-item"><a href="infomodify">修改资料</a></li>
+                    <li class="list-group-item"><a href="repassword">修改密码</a></li>
+                    <li class="list-group-item"><a href="#"></a></li>
+                </ul>
+                <br>
+            <label><h4>&nbsp;文章:</h4></label>
+                <ul class="list list-group">
+                    <li class="list-group-item"><a href="articleAdd">写文章</a></li>
+                    <li class="list-group-item"><a href="personalArticleManage">管理文章</a></li>
+                    <li class="list-group-item"><a href="titleManage">管理类型</a></li>
+                </ul>  
+                <br>
+            
+            </div>       
+        </div> 
+        
+         <!-- 内容主体区域 -->
+        <div layout:fragment="right-bar1" >
+        
+        
+
+        </div>
+        </div>
+
+        
+    <div th:replace="/common/footer::footer"></div>
+
+</body>
+       
