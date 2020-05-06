@@ -35,9 +35,18 @@ public class Admin {
 
 	private String adminName;
 	private String password;
+	private boolean status = true;
 
 	public Admin() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 	
 	

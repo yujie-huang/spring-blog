@@ -1,10 +1,13 @@
 package com.huangyujie.demo.service;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.huangyujie.demo.PBKDF2Util;
 import com.huangyujie.demo.entity.User;
 import com.huangyujie.demo.repository.UserRepository;
 
@@ -12,8 +15,13 @@ import com.huangyujie.demo.repository.UserRepository;
 public class UserService {
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private PBKDF2Util pbk; ///PBKDF2加密
 	
-	public User addUser(User user) {
+	//加密并添加或更新user
+	public User addUser(User user) throws NoSuchAlgorithmException, InvalidKeySpecException {
+		user.setPassword(pbk.getEncryptedPassword(user.getPassword(), user.getUserName()));
+		
 		return userRepository.save(user);
 	}
 	public List<User> findAll() {
@@ -22,10 +30,10 @@ public class UserService {
 	}
 	
 	
-	public boolean login(String userName, String password) {
+	public boolean login(String userName, String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		User user =userRepository.findUserByUserName(userName);
 		
-		if(user!=null&&user.getPassword().equals(password)){
+		if(user!=null&&pbk.authenticate(password, user.getPassword(), userName)&&user.isStatus()){
 			return true;
 		}
 		// TODO Auto-generated method stub
@@ -52,10 +60,47 @@ public class UserService {
 		System.out.println(user.getUserId());
 		userRepository.save(user);
 	}
-	public void rePassword(User user, String newpassword) {
+	public void rePassword(User user, String newpassword) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		// TODO Auto-generated method stub
 		user.setPassword(newpassword);
-		userRepository.save(user);
+		addUser(user);
+	}
+	public boolean changeStatu(String userName) throws NoSuchAlgorithmException, InvalidKeySpecException {
+		// TODO Auto-generated method stub
+		User user = findByUserName(userName);
+		if(user.isStatus()) {
+			user.setStatus(false);
+		}
+		else {
+			user.setStatus(true);
+		}
+		
+		addUser(user);
+		return true;
+	}
+	public boolean repwd(String userName, String newpassword) throws NoSuchAlgorithmException, InvalidKeySpecException {
+		// TODO Auto-generated method stub
+		User user = findByUserName(userName);
+		user.setPassword(newpassword);
+		addUser(user);
+		return true;
+	}
+	public boolean addU(String userName, String newpassword) throws NoSuchAlgorithmException, InvalidKeySpecException {
+		// TODO Auto-generated method stub
+		if(isExist(userName))
+			return false;
+		else {
+			User user = new User();
+			user.setName("未知");
+			user.setUserName(userName);
+			user.setPassword(newpassword);
+			addUser(user);
+			return true;
+		}
+	}
+	public User findByID(int iD) {
+		// TODO Auto-generated method stub
+		return userRepository.findByUserId(iD);
 	}
 
 }

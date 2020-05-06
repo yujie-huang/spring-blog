@@ -11,4 +11,8 @@ import com.huangyujie.demo.entity.Comment;
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 	List<Comment> findByArticle(Article article);
 
+	Comment findByCommentID(int coid);
+
+	List<Comment> findAllByArticle(Article article);
+
 }

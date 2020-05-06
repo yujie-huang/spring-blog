@@ -33,7 +33,7 @@
                 <span style="font-size: 20px;"><strong>类型：</strong></span>
                 <select name="titleID">
   			
-  				<option th:each="title : ${titles}" th:value="${title.titleID}">[[${title.titleName}]]</option>
+  				<option th:each="title : ${titles}" th:value="${title.titleID}" th:if="${title.statu}==true">[[${title.titleName}]]</option>
   			
 				</select>             
                 <input style="margin-left:80px; text-align: center;" type="submit" class="btn btn-success btn-sm" value="提交">
@@ -48,6 +48,9 @@
   		
   	<script>
            $(function(){
+        	   //图片
+        	   $("div img").addClass('img-responsive');
+        	   
             $("#form1").submit(function () {
                 if($("#headline").val()==''){
                    alert("标题不能为空！");
@@ -68,7 +71,7 @@
   			//图片接口
   			layedit.set({
   			  uploadImage: {
-  			    url: '' //接口url
+  			    url: 'articleImageUp' //接口url
   			    ,type: '' //默认post
   			  }
   			});

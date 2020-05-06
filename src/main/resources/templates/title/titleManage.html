@@ -22,6 +22,7 @@
 					<tr>
 						<th>类型ID</th>
 						<th>类型名</th>
+						<th>创建时间</th>
 						<th colspan="2">操作</th>
 					</tr>
 				</thead>
@@ -30,8 +31,10 @@
 						<tr th:each="title:${titles}" >
 							<td class="title-id">[[${title.titleID }]]</td>
 							<td class="title-name">[[${title.titleName}]]</td>
+							<td>[[${title.titleDate }]]</td>
 							<td><button class="btn btn-info btn-sm update" data-toggle="modal" data-target="#myModal">修改</button></td>
 							<td><button class="btn btn-danger btn-sm delete" data-toggle="modal" data-target="#mydeletemodel">删除</button></td>
+							<td><button class="btn btn-info btn-sm  btn-warning change" >[[${title.statu?'已启用':'已禁用'}]]</button></td>
 						</tr>
 					
 					
@@ -218,6 +221,34 @@
 				
 			
 			}); 
+			 
+			 $(".change").click(function(){
+					var title_id = $(this).parent().siblings(".title-id").text();
+					var del=$(this).parent();
+					
+						$.ajax({
+						type : "post",
+						url : "titleupdate",
+						data : {
+							"titleID" : title_id,
+							"func" : "change"
+						},
+						datatype : "json",
+						success : function(data) {
+							if(data=="1"){
+								location.reload();
+							}
+							else{
+								$(".error").text("禁用失败！");
+								setTimeout(function(){$(".error").text("");},2000);
+								
+							}
+						}
+						});
+					
+					
+				
+				}); 
 			
 			
 		});

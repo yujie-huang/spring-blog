@@ -12,6 +12,7 @@ public interface TitleRepository extends JpaRepository<Title, Integer> {
 
 	public List<Title> findAllByUser(User user);
 	Title findByTitleID(int i);
+	public List<Title> findAllByTitleNameContaining(String word);
 	
 
 }

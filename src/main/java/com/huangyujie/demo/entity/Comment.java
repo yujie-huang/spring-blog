@@ -20,6 +20,19 @@ public class Comment {
 	private LocalDateTime commentDatetime = LocalDateTime.now();
 	
 	@ManyToOne
+	private Comment comment;
+	
+	public Comment getComment() {
+		return comment;
+	}
+
+	public void setComment(Comment comment) {
+		this.comment = comment;
+	}
+
+
+
+	@ManyToOne
 	private User user;
 	@ManyToOne
 	private Article article;

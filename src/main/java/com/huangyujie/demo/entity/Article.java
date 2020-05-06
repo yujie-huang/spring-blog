@@ -40,8 +40,8 @@ public class Article {
 	@ManyToOne
 	private Title title;
 	
-	@OneToMany
-	private Set<Comment> comments = new HashSet<>();
+//	@OneToMany
+//	private Set<Comment> comments = new HashSet<>();
 
 	
 
@@ -73,16 +73,16 @@ public class Article {
 
 
 
-	public Set<Comment> getComments() {
-		return comments;
-	}
-
-
-
-
-	public void setComments(Set<Comment> comments) {
-		this.comments = comments;
-	}
+//	public Set<Comment> getComments() {
+//		return comments;
+//	}
+//
+//
+//
+//
+//	public void setComments(Set<Comment> comments) {
+//		this.comments = comments;
+//	}
 
 
 

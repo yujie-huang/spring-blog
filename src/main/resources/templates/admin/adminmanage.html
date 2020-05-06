@@ -2,7 +2,7 @@
 <html layout:decorate="/admin/admin::html">
 <head>
 
-<title>后台用户管理中心</title>
+<title>后台管理员管理中心</title>
  <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -24,33 +24,21 @@
 					<tr>
 						<th>check</th>
 						<th>userName</th>
-						<th>name</th>
-						<th>gender</th>
-						<th>birthday</th>
-						<th>phone</th>
-						<th>Email</th>
-						<th>wechat</th>
-						<th>information</th>
+					
 						<th>statue</th>
 						<th>rePassword</th>
-						<th>more</th>
+						
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="td-a" th:each="user:${users}">
+					<tr class="td-a" th:each="admin:${admins}">
 						<td><input type="checkbox" name="userName"
-							th:text="${user.userId}"></td>
-						<td class="backUserNAme">[[${user.userName}]]</td>
-						<td>[[${user.name}]]</td>
-						<td>[[${user.sex}]]</td>
-						<td>[[${user.birth}]]</td>
-						<td>[[${user.phone}]]</td>
-						<td>[[${user.email}]]</td>
-						<td>[[${user.wechat}]]</td>
-						<td>[[${user.information}]]</td>
-						<td><button class="status btn  btn-sm  btn-warning" >[[${user.status?'已启用':'已禁用'}]]</button></td>
+							th:text="${admin.adminID}"></td>
+						<td class="backUserNAme">[[${admin.adminName}]]</td>
+						
+						<td><button class="status btn  btn-sm  btn-warning" >[[${admin.status?'已启用':'已禁用'}]]</button></td>
 						<td><button class="repassword btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal">重置密码</button></td>
-						<td><a th:href="@{getuserbyid(userId=${user.userId})}">更多</a></td>
+						
 					</tr>
 				
 				</tbody>
@@ -134,7 +122,7 @@
 				var res = $(this);
 				$.ajax({
 					type : "post",
-					url : "usermanage",
+					url : "adminmanage",
 					data : {
 						"func": "change",
 						"userName" : user,
@@ -172,7 +160,7 @@
 					console.log(newpassword)
 					$.ajax({
 					type : "post",
-					url : "usermanage",
+					url : "adminmanage",
 					data : {
 						"func": "repwd",
 						"userName" : user,
@@ -199,12 +187,12 @@
 			$(".add").click(function(){
 				var userName;
 				var password;
-				$(".commitadd").click(function(){
+				$(".commitadd").unbind('click').click(function(){
 					userName = $(".userName").val();
 					password = $(".password").val();
 					$.ajax({
 						type : "post",
-						url : "usermanage",
+						url : "adminmanage",
 						data : {
 							"func": "add",
 							"userName" : userName,
@@ -216,7 +204,7 @@
 								location.reload();
 							}
 							if (data == "0" ) {
-								alert("修改失败！")
+								alert("添加失败！")
 								return ;
 							}
 

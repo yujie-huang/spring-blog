@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.huangyujie.demo.entity.Article;
 import com.huangyujie.demo.entity.Title;
 import com.huangyujie.demo.service.ArticleService;
+import com.huangyujie.demo.service.CommentService;
 import com.huangyujie.demo.service.TitleService;
 import com.huangyujie.demo.service.UserService;
 
@@ -27,10 +28,14 @@ public class ArticleController {
 	private UserService userService;
 	@Autowired
 	private TitleService titleService;
+	@Autowired
+	private CommentService commentService;
 	
 	@GetMapping("/showArticle")
 	public String showArticle(Model model,HttpSession session,int articleID) {
 		Article article = articleService.findByArticleID(articleID);
+		List comments = commentService.fingAllByArticle(article);
+		model.addAttribute("comments",comments);
 		model.addAttribute("article",article);
 		return "/article/article";
 		
@@ -111,6 +116,16 @@ public class ArticleController {
 			return "1";
 		}
 		return "0";
+	}
+	
+	
+	
+	@GetMapping("/getarticlebytitle")
+	public String getUserArticleBytitle(int titleID,String userName,Model model) {
+		
+		List<Article> articles = articleService.findAllByUserandTitle(userService.findByUserName(userName),titleService.findBytitleID(titleID));
+		model.addAttribute("articles",articles);
+		return "index";
 	}
 
 }

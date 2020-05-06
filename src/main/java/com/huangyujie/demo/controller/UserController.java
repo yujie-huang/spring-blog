@@ -2,6 +2,10 @@ package com.huangyujie.demo.controller;
 
 
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -12,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
+import com.huangyujie.demo.entity.Article;
 import com.huangyujie.demo.entity.User;
+import com.huangyujie.demo.service.ArticleService;
 import com.huangyujie.demo.service.UserService;
 
 
@@ -21,6 +27,8 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ArticleService articleService;
 	
 	
 	@GetMapping("/login")
@@ -29,7 +37,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public String login(String userName,String password,Model model,HttpSession session) {
+	public String login(String userName,String password,Model model,HttpSession session) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		if(userService.login(userName,password)) {
 			session.setAttribute("userName", userName);
 			return "redirect:index";
@@ -55,7 +63,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/register")
-	public String register(@Valid User user, BindingResult bindingResult,Model model) {
+	public String register(@Valid User user, BindingResult bindingResult,Model model) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		if(bindingResult.hasErrors()||userService.isExist(user.getUserName())) {
 			if(userService.isExist(user.getUserName())) 
 				model.addAttribute("errUserName","账号已存在");
@@ -126,11 +134,11 @@ public class UserController {
 	}
 	
 	@PostMapping("/repassword")
-	public String rePassword(HttpSession session,String password,String newpassword,String renewpassword,Model model) {
+	public String rePassword(HttpSession session,String password,String newpassword,String renewpassword,Model model) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		String userName=(String)session.getAttribute("userName");
 		if(userName!=null) {
 			User user = userService.findByUserName(userName);
-			if (password.equals(user.getPassword())) {
+			if (userService.login(userName, password)) {
 				if(newpassword.equals(renewpassword)) {
 					userService.rePassword(user,newpassword);
 				}else {
@@ -154,7 +162,14 @@ public class UserController {
 		return "redirect:index";
 	}
 	
-	
+	@GetMapping("/getuserbyid")
+	public String getUserArticleByID(int ID,Model model) {
+		User user = userService.findByID(ID);
+		List<Article> articles = articleService.findAllByUser(user);
+		model.addAttribute("user",user);
+		model.addAttribute("articles",articles);
+		return "user/user";
+	}
 	
 	
 }

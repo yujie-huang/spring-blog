@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<html>
+
 <head>
 	
 	    <title>主页</title>
@@ -19,19 +21,19 @@
     <div id="content" class="container">
     
            
-          <!--  
-            <div class="card" style="margin-top:1%;" th:each="a:${articles}">
+           
+            <div class="card" style="margin-top:1%;" th:each="article:${articles}">
             	<div class="card-body">
-     				<a href="getarticlebyid?ID=${article.article_id }">
-     				 <h4 class="card-title" th:text="${article.articleHeadline }"></h4>
+     				<a th:href="@{showArticle(articleID=${article.articleID})}">
+     				 <h4 class="card-title" th:text="${article.articleHeadline}"></h4>
      				</a>
-     				 <p class="card-text " th:text="${fn:substring(article.content,0,66)}">......</p>
+     				 <p class="card-text " th:utext="${#strings.length(article.content)}>30?${#strings.substring(article.content,0,30)}:${article.content}">......</p>
      				 
-      				 <a href="getuserbyid?ID=${article.userName }" class="card-link" th:text="${article.fullName }">BY· </a> ???
-      				 <a href="getarticlebytitle?typeID=${article.type_id }&userName=${article.userName}" class="card-link"># ${article.type_name }</a>
+      				 <a th:href="@{getuserbyid(ID=${article.user.userId})}" class="card-link">BY· [[${article.user.name}]] </a> 
+      				 <a th:href="@{getarticlebytitle}+'?titleID='+${article.title.titleID}+'&userName='+${article.user.userName}" class="card-link"># [[ ${article.title.titleName }]]</a>
     			</div>
             </div>
-             -->
+            
   
     </div>
 

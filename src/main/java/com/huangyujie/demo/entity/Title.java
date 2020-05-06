@@ -23,14 +23,16 @@ public class Title {
 
 	private String titleName;
 	
-	private LocalDateTime titleDate;
+	private LocalDateTime titleDate = LocalDateTime.now();
+	
+	private boolean statu=true;
 	
 	@ManyToOne
 	private User user;
 	
-	@OneToMany
-	private Set<Article> articles =  new HashSet<>();
-	
+//	@OneToMany
+//	private Set<Article> articles =  new HashSet<>();
+//	
 	public User getUser() {
 		return user;
 	}
@@ -41,14 +43,14 @@ public class Title {
 	}
 
 
-	public Set<Article> getArticles() {
-		return articles;
-	}
-
-
-	public void setArticles(Set<Article> articles) {
-		this.articles = articles;
-	}
+//	public Set<Article> getArticles() {
+//		return articles;
+//	}
+//
+//
+//	public void setArticles(Set<Article> articles) {
+//		this.articles = articles;
+//	}
 
 
 	public void setTitleID(int titleID) {
@@ -81,6 +83,16 @@ public class Title {
 	
 	public Title() {
 		// TODO Auto-generated constructor stub
+	}
+
+
+	public boolean isStatu() {
+		return statu;
+	}
+
+
+	public void setStatu(boolean statu) {
+		this.statu = statu;
 	}
 
 }

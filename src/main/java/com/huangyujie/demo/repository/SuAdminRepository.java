@@ -7,4 +7,6 @@ import com.huangyujie.demo.entity.SuAdmin;
 @Repository
 public interface SuAdminRepository extends JpaRepository<SuAdmin,Integer> {
 
+	SuAdmin findBySuadminName(String u);
+
 }

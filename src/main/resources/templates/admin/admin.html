@@ -5,7 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE"></title>
+    <link rel="stylesheet" href="/css/admin.css">
     <link rel="stylesheet" href="/layui/css/layui.css">
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	
+	<script src="layui/layui.all.js"></script>
+	<script src="/js/jquery-3.3.1.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+    
 
 </head>
 
@@ -24,7 +31,7 @@
                 <a href="javascript:;">关于</a>
                 <dl class="layui-nav-child">
                     
-                    <dd><a href="">授权管理</a></dd>
+                    <dd><a href="">日志</a></dd>
                 </dl>
             </li>
         </ul>
@@ -32,7 +39,7 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    贤心
+                    [[${session.admin}]] [[${session.suadmin}]]
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
@@ -48,17 +55,14 @@
 
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="/admin">文章管理</a>
-<!--                    <dl class="layui-nav-child">-->
-<!--                        <dd><a href="javascript:;">文章草稿</a></dd>-->
-
-<!--                    </dl>-->
-                </li>
 
 
                 <li class="layui-nav-item">
-                    <a href="/adminWeb/normalUser">用户管理</a>
+                    <a href="/usermanage">用户管理</a>
+
+                </li>
+                 <li class="layui-nav-item" th:if="${session.suadmin}!=null">
+                    <a href="/adminmanage">管理员用户管理</a>
 
                 </li>
             </ul>
@@ -66,7 +70,7 @@
     </div>
 
 
-    <div class="layui-body">
+    <div class="layui-body" style="z-index:10000">
         <!-- 内容主体区域 -->
         <div layout:fragment="content"  style="padding: 15px;">
         
@@ -84,7 +88,7 @@
 </div>
 
 <!-- 用于全局 -->
-<script src="layui/layui.all.js"></script>
+
 <script>
     layui.use('element', function () {
         var element = layui.element;

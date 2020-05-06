@@ -63,12 +63,31 @@ public class TitleService {
 		User user=userRepository.findUserByUserName(userName);
 		title.setUser(user);
 		List<Title> titles = titleRepository.findAllByUser(user);
+		
+		//判断是否已存在
 		for(int i=0;i<titles.size();i++) {
 			if(titles.get(i).getTitleName().equals(title.getTitleName())) {
 				return false;
 			}
 		}
 		titleRepository.save(title);
+		return true;
+	}
+	
+	
+	public boolean changeStatu(Title title, String userName) {
+		// TODO Auto-generated method stub
+		User user=userRepository.findUserByUserName(userName);
+		title = findBytitleID(title.getTitleID());
+		
+		
+		if(title.isStatu()) {
+				title.setStatu(false) ;
+		}else {
+				title.setStatu(true);
+		}
+		titleRepository.save(title);
+		
 		return true;
 	}
 }

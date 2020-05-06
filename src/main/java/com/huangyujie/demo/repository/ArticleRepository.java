@@ -12,9 +12,13 @@ import com.huangyujie.demo.entity.User;
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
 	Article findByArticleID(int articleID);
 
-	List<Article> findAllByTitle(Title findBytitleID);
+	List<Article> findAllByTitle(Title title);
 
 	List<Article> findAllByUser(User user);
+
+	List<Article> findAllByUserAndTitle(User user, Title title);
+
+	List<Article> findAllByArticleHeadlineContaining(String word);
 
 	
 	

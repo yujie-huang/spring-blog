@@ -66,7 +66,13 @@ public class TitleController {
 			}
 			
 			break;
-			
+		case "change":
+			if(titleService.changeStatu(title,(String)session.getAttribute("userName"))) {
+				f="1";
+			}
+			else {
+				f="0";
+			}
 
 		default:
 			break;
